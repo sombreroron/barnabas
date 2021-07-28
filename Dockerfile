@@ -12,6 +12,9 @@ ADD ./package.json ./
 # install dependencies
 RUN npm install
 
+# copy code
+ADD . .
+
 # build code
 RUN npm run build
 
