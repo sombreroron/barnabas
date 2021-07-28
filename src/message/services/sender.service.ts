@@ -7,9 +7,9 @@ const messages  = {};
 export class SenderService {
     constructor(private kafkaClient: ClientService) {}
 
-    async send(topic, message): Promise<void> {
+    async send(topic: string, message: any): Promise<void> {
         try {
-            await this.kafkaClient.producer.send({ topic, messages: [message] });
+            await this.kafkaClient.producer.send({ topic, messages: [{ value: JSON.stringify(message) }] });
         } catch (error) {
             console.log(error, `Failed sending message to Kafka with error :${error.message}`);
         }

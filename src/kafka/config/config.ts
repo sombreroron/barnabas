@@ -12,7 +12,7 @@ export class Config implements KafkaConfig, ConsumerConfig {
     ssl = Config.generateSSLConfig();
 
     private static generateSSLConfig(): ConnectionOptions|boolean {
-        if (process.env["SSL"]) {
+        if (process.env["SSL"].toString() === 'true') {
             return {
                 rejectUnauthorized: false,
                 ca: [JSON.parse(process.env['SSL_CA'])],

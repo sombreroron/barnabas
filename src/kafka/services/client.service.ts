@@ -14,7 +14,7 @@ export class ClientService implements OnModuleInit, OnModuleDestroy {
     }
 
     async onModuleInit(): Promise<void> {
-        await Promise.all([this.consumer.connect()]);
+        await Promise.all([this.producer.connect(), this.consumer.connect()]);
         await Promise.all(this.config.topics.map(topic => this.consumer.subscribe({ topic })));
     }
 
