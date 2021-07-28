@@ -15,9 +15,9 @@ export class Config implements KafkaConfig, ConsumerConfig {
         if (process.env["SSL"]) {
             return {
                 rejectUnauthorized: false,
-                ca: [process.env['SSL_CA']],
-                key: process.env['SSL_KEY'],
-                cert: process.env['SSL_CERT']
+                ca: [JSON.parse(process.env['SSL_CA'])],
+                key: JSON.parse(process.env['SSL_KEY']),
+                cert: JSON.parse(process.env['SSL_CERT'])
             }
         }
 
