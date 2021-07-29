@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
-const port = process.env.PORT || 9999;
+const port = process.env.PORT || 29092;
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule, {

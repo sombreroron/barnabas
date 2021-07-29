@@ -7,8 +7,8 @@ import { v4 as uuidV4 } from 'uuid';
 export class Config implements KafkaConfig, ConsumerConfig {
     clientId = process.env['CLIENT_ID'] || 'barnabas';
     groupId = process.env['GROUP_ID'] || `barnabas-group-${uuidV4()}`;
-    brokers = process.env['BROKERS'].split(',');
-    topics = process.env['TOPICS'].split(',');
+    brokers = (process.env['BROKERS'] || '').split(',');
+    topics = (process.env['TOPICS'] || '').split(',');
     ssl = Config.generateSSLConfig();
 
     private static generateSSLConfig(): ConnectionOptions|boolean {

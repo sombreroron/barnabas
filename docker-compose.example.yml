@@ -1,0 +1,13 @@
+version: '3'
+services:
+  barnabas:
+    image: sombreroron/barnabas
+    ports:
+      - '29092:29092'
+    environment:
+      BROKERS: broker-01:9092,broker-02:9092
+      TOPICS: topic-one,topic-two
+      SSL: true
+      SSL_CA: '"---- BEGIN CERTIFICATE----\r\nBP3qM\r\nG0R7M\r\n----END CERTIFICATE----"'
+      SSL_KEY: '"---- BEGIN CERTIFICATE----\r\nBP3qM\r\nG0R7M\r\n----END CERTIFICATE----"'
+      SSL_CERT: '"---- BEGIN CERTIFICATE----\r\nBP3qM\r\nG0R7M\r\n----END CERTIFICATE----"'
