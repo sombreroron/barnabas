@@ -24,7 +24,7 @@ Configure the app using the following environment variables:
 
 ``SSL`` Optional. Set to false by default.
 
-When ssl is true, the following credentials are required. Each must be added inside quotes (e.g. '"---- BEGIN CERTIFICATE----\r\nBP3qM\r\nG0R7M\r\n----END CERTIFICATE----"'):
+When ssl is true, the following credentials are required.
 
 ``SSL_CA``
 
