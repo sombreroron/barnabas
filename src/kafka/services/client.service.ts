@@ -14,8 +14,18 @@ export class ClientService implements OnModuleInit, OnModuleDestroy {
     }
 
     async onModuleInit(): Promise<void> {
-        await Promise.all([this.producer.connect(), this.consumer.connect()]);
+        await this.connect();
         await Promise.all(this.config.topics.map(topic => this.consumer.subscribe({ topic })));
+    }
+
+    async connect(): Promise<void> {
+        try {
+            await Promise.all([this.producer.connect(), this.consumer.connect()]);
+        } catch (e) {
+            if (e.name === 'KafkaJSNumberOfRetriesExceeded') {
+                await this.connect();
+            }
+        }
     }
 
     async onModuleDestroy(): Promise<void> {

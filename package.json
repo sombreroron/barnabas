@@ -27,7 +27,7 @@
     "@nestjs/swagger": "^5.0.8",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
-    "kafkajs": "^1.15.0",
+    "kafkajs": "^2.1.0",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
