@@ -1,5 +1,4 @@
 import { Body, Controller, Post, Param, Get } from '@nestjs/common';
-import { upperFirst, camelCase } from 'lodash';
 import { SenderService } from "@message/services/sender.service";
 import { SubscriberService } from "@message/services/subscriber.service";
 
@@ -9,17 +8,13 @@ export class MessageController {
 
     @Post(':topic')
     async send(@Body() body, @Param() params) {
-        const topic = upperFirst(camelCase(params.topic));
-
-        const result = await this.sender.send(topic, body);
+        const result = await this.sender.send(params.topic, body);
 
         return result;
     }
 
     @Get(':topic')
     async getEvent(@Body() body, @Param() params) {
-        const topic = upperFirst(camelCase(params.topic));
-
-        return this.subscriber.getMessages(topic, body);
+        return this.subscriber.getMessages(params.topic, body);
     }
 }
