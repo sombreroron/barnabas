@@ -1,20 +1,24 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { get } from 'lodash';
 import { ClientService } from '@kafka/services/client.service';
-import {Message} from "kafkajs";
+import { SchemaRegistryService } from '@kafka/services/schema-registry.service';
+import { Message } from 'kafkajs';
 
 const messages  = {};
 
 @Injectable()
 export class SubscriberService implements OnModuleInit {
-    constructor(private kafkaClient: ClientService) {}
+    constructor(
+        private kafkaClient: ClientService,
+        private schemaRegistry: SchemaRegistryService,
+    ) {}
 
     async onModuleInit() {
         await this.kafkaClient.consumer.run({
             autoCommit: true,
             eachMessage: async ({ topic, message }) => {
                 messages[topic] = messages[topic] || [];
-                messages[topic].push(this.getValue(message));
+                messages[topic].push(await this.getValue(message));
             },
         })
     }
@@ -33,8 +37,21 @@ export class SubscriberService implements OnModuleInit {
         return result;
     }
 
-    private getValue(message: Message): any {
-        const value = message.value.toString();
+    private async getValue(message: Message): Promise<any> {
+        if (message.value && Buffer.isBuffer(message.value) && message.value[0] === 0) {
+            try {
+                return await this.schemaRegistry.decode(message.value);
+            } catch (error) {
+                console.error('Failed to decode Avro message:', error);
+                return message.value.toString();
+            }
+        }
+
+        const value = message.value?.toString();
+
+        if (!value) {
+            return value;
+        }
 
         try {
             return JSON.parse(value);
