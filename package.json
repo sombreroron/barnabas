@@ -25,6 +25,7 @@
     "@nestjs/core": "^8.0.4",
     "@nestjs/platform-express": "^8.0.4",
     "@nestjs/swagger": "^5.0.8",
+    "avsc": "^5.7.9",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
     "kafkajs": "^2.1.0",
