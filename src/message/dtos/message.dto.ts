@@ -1,4 +1,4 @@
-import { MessageType } from '@message/pubsub-client.enum';
+import { MessageType } from '@message/message.enum';
 import { IsEnum, IsObject, IsOptional, IsString } from 'class-validator';
 
 export class MessageDto {

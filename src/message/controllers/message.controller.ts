@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Param, Get } from '@nestjs/common';
 import { SenderService } from "@message/services/sender.service";
 import { SubscriberService } from "@message/services/subscriber.service";
-import { MessageType } from '@message/pubsub-client.enum';
+import { MessageType } from '@message/message.enum';
 import { MessageDto } from '@message/dtos/message.dto';
 
 @Controller()
