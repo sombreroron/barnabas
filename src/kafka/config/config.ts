@@ -8,7 +8,7 @@ export class Config implements KafkaConfig, ConsumerConfig {
     clientId = process.env['CLIENT_ID'] || 'barnabas';
     groupId = process.env['GROUP_ID'] || `barnabas-group-${uuidV4()}`;
     brokers = (process.env['BROKERS'] || '').split(',');
-    topics = (process.env['TOPICS'] || '').split(',');
+    topics = process.env['TOPICS'] ? (process.env['TOPICS'] || '').split(',') : [];
     sasl = Config.generateSaslConfig();
     ssl = this.sasl?.mechanism ? false : Config.generateSSLConfig();
 
