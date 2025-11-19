@@ -13,14 +13,10 @@ export class SenderService {
         private schemaRegistry: SchemaRegistryService,
     ) {}
 
-    async send(topic: string, { data, type = MessageType.JSON, schema }: MessageDto): Promise<void> {
+    async send(topic: string, { data, type = MessageType.JSON, schema, subject = `${topic}-value` }: MessageDto): Promise<void> {
         try {
             if (type === MessageType.AVRO) {
-                if (!schema) {
-                    throw new Error('Schema is required for Avro message');
-                }
-
-                const buffer = await this.schemaRegistry.encode(data, schema);
+                const buffer = await this.schemaRegistry.encode(data, { schema, subject });
                 await this.kafkaClient.producer.send({ topic, messages: [{ value: buffer }] });
             } else {
                 await this.kafkaClient.producer.send({ topic, messages: [{ value: JSON.stringify(data) }] });

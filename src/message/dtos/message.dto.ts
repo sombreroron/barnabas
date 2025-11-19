@@ -12,4 +12,8 @@ export class MessageDto {
     @IsOptional()
     @IsString()
     schema?: string;
+
+    @IsOptional()
+    @IsString()
+    subject?: string;
 }

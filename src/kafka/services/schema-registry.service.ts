@@ -17,15 +17,12 @@ export class SchemaRegistryService {
         }
     }
 
-    async encode(data: Record<string, unknown>, schema: string): Promise<Buffer> {
+    async encode(data: Record<string, unknown>, { schema, subject }: { schema?: string, subject?: string }): Promise<Buffer> {
         if (!this.registry) {
             throw new Error('Schema Registry not configured');
         }
 
-        const { id } = await this.registry.register({
-            type: SchemaType.AVRO,
-            schema,
-        });
+        const id = schema ? await this.generateSchema(schema) : await this.registry.getLatestSchemaId(subject);
 
         return this.registry.encode(id, data);
     }
@@ -36,5 +33,14 @@ export class SchemaRegistryService {
         }
 
         return this.registry.decode(buffer);
+    }
+
+    private async generateSchema(schema: string): Promise<number> {
+        const { id } = await this.registry.register({
+            type: SchemaType.AVRO,
+            schema,
+        });
+
+        return id;
     }
 }
