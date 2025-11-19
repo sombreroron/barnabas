@@ -26,3 +26,4 @@ tests/*.xml
 !.vscode/launch.json
 !.vscode/extensions.json
 
+.env.*

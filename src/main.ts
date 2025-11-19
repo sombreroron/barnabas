@@ -1,3 +1,8 @@
+import dotenv from "dotenv";
+
+dotenv.config({ path: `.env.${process.env.ENV}` });
+dotenv.config({ path: ".env" });
+
 import { NestFactory, HttpAdapterHost } from '@nestjs/core';
 import bodyParser from 'body-parser';
 import { AppModule } from './app.module';
